@@ -19,8 +19,14 @@ build:
 
 # docker run -d --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
  
+attach:
+	docker exec -it $(NAME) bin/bash
+
+host:
+	docker run -d --net=host --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
+
 start:
-	docker run -d -p 1234:5060 --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
+	docker run -d -p 8000:8000/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 	docker exec -it $(NAME) bin/bash
 
 kill:

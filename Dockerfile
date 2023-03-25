@@ -12,6 +12,9 @@ ARG OPENSIPS_BUILD=releases
 #install basic components
 RUN apt-get -y update -qq && apt-get -y install gnupg2 ca-certificates mariadb-server
 
+#for testing
+RUN apt-get -y update -qq && apt-get -y install sip-tester vim
+
 #add keyserver, repository
 RUN apt-key adv --fetch-keys https://apt.opensips.org/pubkey.gpg
 RUN echo "deb https://apt.opensips.org bullseye ${OPENSIPS_VERSION}-${OPENSIPS_BUILD}" >/etc/apt/sources.list.d/opensips.list
@@ -33,6 +36,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
 COPY run.sh /run.sh
+RUN chmod +x /run.sh
 
 
 ENTRYPOINT ["./run.sh"]
