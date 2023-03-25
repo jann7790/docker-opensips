@@ -33,4 +33,5 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
 
-ENTRYPOINT ["/usr/sbin/opensips", "-FE"]
+ENTRYPOINT ["./run.sh"]
+# ENTRYPOINT ["/usr/sbin/opensips", "-FE"]
