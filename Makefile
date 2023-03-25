@@ -17,5 +17,8 @@ build:
 		--tag="opensips/opensips:$(OPENSIPS_DOCKER_TAG)" \
 		.
 
+# docker run -d --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
+ 
 start:
-	docker run -d --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
+	docker run -d -p 1234:5060 --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
+	docker exec -it $(NAME) bin/bash
