@@ -22,3 +22,7 @@ build:
 start:
 	docker run -d -p 1234:5060 --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 	docker exec -it $(NAME) bin/bash
+
+kill:
+	docker kill $(NAME)
+	docker rm $(NAME)

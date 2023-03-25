@@ -32,6 +32,8 @@ RUN if [ -n "${OPENSIPS_EXTRA_MODULES}" ]; then \
 RUN rm -rf /var/lib/apt/lists/*
 RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
+COPY run.sh /run.sh
+
 
 ENTRYPOINT ["./run.sh"]
 # ENTRYPOINT ["/usr/sbin/opensips", "-FE"]
