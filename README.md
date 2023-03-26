@@ -3,6 +3,16 @@ http://www.opensips.org/
 
 Docker recipe for building and starting an OpenSIPS image
 
+## sip ip settings
+listen=udp:<docker_ip>:5060   # CUSTOMIZE ME
+
+advertised_address="192.168.50.17"
+
+service opensips start
+
+service mariadb start
+
+
 ## Building the image
 You can build the docker image by running:
 ```
