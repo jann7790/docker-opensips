@@ -60,11 +60,6 @@ advertised_address="<vm_ip 192.168.....>"
 
 
 
-## make 使用
-
-make start
-
-make kill
 
 
 ---
