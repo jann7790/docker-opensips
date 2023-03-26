@@ -1,49 +1,43 @@
-# OpenSIPS Docker Image
-http://www.opensips.org/
-
-Docker recipe for building and starting an OpenSIPS image
-
-## sip ip settings
-listen=udp:<docker_ip>:5060   # CUSTOMIZE ME
-
-advertised_address="192.168.50.17"
-
-service opensips start
-
-service mariadb start
-
-
 ## Building the image
-You can build the docker image by running:
-```
-make build
-```
-
-This command will build a docker image with OpenSIPS master version taken from
-the git repository. To build a different git version, you can run:
-```
-OPENSIPS_VERSION=2.2 make build
-```
-
-To build with MySQL support:
 ```
 OPENSIPS_EXTRA_MODULES=opensips-mysql-module make build
 ```
 
-To start the image, simply run:
+
+## settings
+
+須將vm 網路設定為 bridged ， 並勾選 replicate physical network
+
+![]("./images/vm_setting.jpg")
+
 ```
-make start
+
+socket ip 已由 run.sh 腳本自動設置
+
+輸入
+
+    ip a 
+
+查看vm ip 將其填入advertised_address
+
+```
+socket=udp:<docker_ip>:5060   # CUSTOMIZE ME
+
+advertised_address="<vm_ip 192.168.....>"
 ```
 
-## Variables
-You can set different variables to tune your deployment:
- * `OPENSIPS_VERSION` - sets the opensips version (Default: `3.1`)
- * `OPENSIPS_BUILD` - specifies the build to use, `nightly` or `releases` (Default: `releases`)
- * `OPENSIPS_DOCKER_TAG` - indicates the docker tag (Default: `latest`)
- * `OPENSIPS_CLI` - specifies whether to install opensips-cli (`true`) or not (`false`) (Default: `true`)
- * `OPENSIPS_EXTRA_MODULES` - specifies extra opensips modules to install (Default: no other module)
 
-## Packages on DockerHub
+重啟opensips
 
-Released docker packages are visible on DockerHub
-https://hub.docker.com/r/opensips/opensips
+    service opensips restart
+
+開啟mysql
+
+    service mariadb start
+
+建立opensips資料庫
+    
+    opensips-cli -x database create
+
+建立opensips用戶
+    opensips-cli -x user add 1000 123456
