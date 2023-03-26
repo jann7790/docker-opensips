@@ -31,7 +31,6 @@ test:
 	docker run -d --ip=10.0.0.1 -p 8000:8000/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 	docker exec -it $(NAME) bin/bash
 
-	
 start:
 	docker run -d -p 8000:8000/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 	docker exec -it $(NAME) bin/bash

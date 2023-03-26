@@ -1,8 +1,17 @@
+# opensips-docker
+
+使用版本opensips 3.3
+
+debian/bullseye
+
 ## Building the image
 ```
 OPENSIPS_EXTRA_MODULES=opensips-mysql-module make build
 ```
 
+## Running the container
+
+make start
 
 ## settings
 
@@ -10,7 +19,6 @@ OPENSIPS_EXTRA_MODULES=opensips-mysql-module make build
 
 
 ![plot](./images/vm.jpg)
-
 
 
 
@@ -42,7 +50,25 @@ advertised_address="<vm_ip 192.168.....>"
 建立opensips資料庫
     
     opensips-cli -x database create
+    #Password for admin MySQL user (root): 無密碼直接enter
+
 
 建立opensips用戶
 
-    opensips-cli -x user add 1000 123456
+    opensips-cli -x user add 7414 7414
+    #Please provide the domain of the user: 輸入vm ip
+
+
+
+## make 使用
+
+make start
+
+make kill
+
+
+---
+
+wsl  無法使用 似乎還需要NAT traverse
+
+
