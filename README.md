@@ -55,7 +55,7 @@ advertised_address="<vm_ip 192.168.....>"
 
 建立opensips用戶
 
-    opensips-cli -x user add 7414 7414
+    opensips-cli -x user add 1000 123456
     #Please provide the domain of the user: 輸入vm ip
 
 
