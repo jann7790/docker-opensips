@@ -2,7 +2,7 @@
 
 使用版本opensips 3.3
 
-debian/bullseye
+以 debian/bullseye docker 架設在 ubuntu18 的 vm上
 
 ## Building the image
 ```
