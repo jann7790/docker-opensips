@@ -4,14 +4,7 @@
 
 以 debian/bullseye docker 架設在 ubuntu18 的 vm上
 
-## Building the image
-```
-OPENSIPS_EXTRA_MODULES=opensips-mysql-module make build
-```
 
-## Running the container
-
-make start
 
 ## settings
 
@@ -22,6 +15,47 @@ make start
 
 
 
+
+
+## Building the image
+```
+make build
+```
+
+## Running the container
+
+    make start
+    
+## init database
+
+    ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7
+    
+先確認ip創建sip帳號時須使用此ip，執行後須輸入db密碼預設無密碼直接enter即可
+    
+    make init_database
+    
+defaul user for sip: 1000
+password for user 1000: 123456
+    
+    
+## attach container to debug or whatever
+    make attach
+
+## kill and remove container
+
+    make kill
+
+
+
+
+
+
+
+
+---
+
+
+## 新版已將以下步驟併入makefile
 輸入
 
 
@@ -30,7 +64,7 @@ make start
 查看vm ip 將其填入 advertised_address
 
 ```
-socket=udp:<docker_ip>:5060   # CUSTOMIZE ME
+socket=udp:<docker_ip>:5060   
 #socket ip 已由 run.sh 腳本自動設置
 
 advertised_address="<vm_ip 192.168.....>"
