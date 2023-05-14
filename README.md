@@ -8,7 +8,7 @@
 
 ## settings
 
-須將vm 網路設定為 bridged ， 並勾選 replicate physical network
+須將vm 網路設定為 bridged ，否則區域網路內的裝置無法連接sips， 並勾選 replicate physical network
 (使用此網路設定若vm太久沒用導致 -> a start job is running for wait for network.........)
 
 ![plot](./images/vm.jpg)
