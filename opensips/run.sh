@@ -4,8 +4,8 @@ sed -i "s/RUN_OPENSIPS=no/RUN_OPENSIPS=yes/g" /etc/default/opensips
 sed -i "s/DAEMON=\/sbin\/opensips/DAEMON=\/usr\/sbin\/opensips/g" /etc/init.d/opensips
 
 DOCKER_IP=$(ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7)
-HOST_IP=$1
-
+# HOST_IP=$1
+echo "host ip ${HOST_IP}"
 
 
 sed -i "s/^socket=udp.*5060/socket=udp:${DOCKER_IP}:5060\nadvertised_address=${HOST_IP}/g" /etc/opensips/opensips.cfg

@@ -116,9 +116,9 @@ communicate with db of opensips
 
 # todo
 
-- [X] register
-- [X] loging
-- [X] docker-compose
+- [ ] register
+- [ ] loging
+- [ ] docker-compose
 
 
 

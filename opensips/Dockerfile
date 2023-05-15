@@ -1,6 +1,12 @@
 FROM debian:bullseye
 LABEL maintainer="Razvan Crainea <razvan@opensips.org>"
 
+
+
+ARG HOST_IP
+ENV HOST_IP=${HOST_IP}
+
+
 USER root
 
 # Set Environment Variables
@@ -39,19 +45,23 @@ RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
 
 
+
+
+
+
+
+COPY createDBUser.sql /createDBUser.sql
+
+
 # allow remote access
 RUN echo [mysqld] >> /etc/mysql/my.cnf
 RUN echo skip-networking=0 >> /etc/mysql/my.cnf
 RUN echo skip-bind-address >> /etc/mysql/my.cnf
 
 
-
-
-
 COPY run.sh /run.sh
-
-
 RUN chmod +x /run.sh
+
 
 
 ENTRYPOINT ["./run.sh"]

@@ -1,8 +1,12 @@
 from flask import Flask
 import mysql.connector
- 
+import os
+
+
+
+
 db = mysql.connector.connect(
-    host="192.168.112.135",
+    host=os.environ['HOST_IP'],
     user="newuser",
     password="newpassword",
     database="opensips"
@@ -14,6 +18,7 @@ app = Flask(__name__)
  
 @app.route('/')
 def hello_world():
+    print('ip", os.environ['HOST_IP'])
     return 'Flask Dockerized'
 
 

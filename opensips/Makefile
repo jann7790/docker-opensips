@@ -21,6 +21,7 @@ all:
 
 build:
 	docker build \
+		--build-arg=HOST_IP=$(HOST_IP) \
 		--build-arg=OPENSIPS_BUILD=$(OPENSIPS_BUILD) \
 		--build-arg=OPENSIPS_VERSION=$(OPENSIPS_VERSION) \
 		--build-arg=OPENSIPS_CLI=${OPENSIPS_CLI} \
@@ -51,14 +52,13 @@ host:
 	docker run -d --network host --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 
 
-
 # -it
 test:
-	docker run -it -p 8000:8000/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG) $(HOST_IP)
+	docker run -it -p 8000:8000/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 
 # -d
 start:
-	docker run -d -p 3306:3306/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG) $(HOST_IP)
+	docker run -d -p 3306:3306/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 
 kill:
 	docker kill $(NAME);docker rm $(NAME)

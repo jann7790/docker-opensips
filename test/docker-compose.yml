@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  opensips:
+
+    build:
+      context: ./opensips
+      dockerfile: Dockerfile
+      args:     # Add build arguments
+        APP_HOME: app
+        OPENSIPS_BUILD : releases
+        OPENSIPS_VERSION : 3.3
+        OPENSIPS_CLI : 1
+        OPENSIPS_EXTRA_MODULES : opensips-mysql-module
+        HOST_IP : ${HOST_IP}
+    ports:
+     - "3306:3306/tcp"
+     - "5060:5060/udp"
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        HOST_IP: ${HOST_IP}
+
+    ports:
+      - "80:8888"
