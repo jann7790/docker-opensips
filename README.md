@@ -1,4 +1,4 @@
-# opensips-docker
+# opensips
 
 使用版本opensips 3.3
 
@@ -99,5 +99,28 @@ advertised_address="<vm_ip 192.168.....>"
 ---
 
 wsl  無法使用 似乎還需要NAT traverse
+
+---
+
+
+
+
+
+
+
+
+
+# backend
+
+communicate with db of opensips
+
+# todo
+
+- [X] register
+- [X] loging
+- [X] docker-compose
+
+
+
 
 
