@@ -2,7 +2,7 @@ NAME ?= opensips
 OPENSIPS_VERSION ?= 3.3
 OPENSIPS_BUILD ?= releases
 OPENSIPS_DOCKER_TAG ?= latest
-OPENSIPS_CLI ?= true
+OPENSIPS_CLI ?= 1
 OPENSIPS_EXTRA_MODULES ?= opensips-mysql-module
 
 HOST_IP=$(shell ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7)
@@ -62,3 +62,8 @@ start:
 
 kill:
 	docker kill $(NAME);docker rm $(NAME)
+
+
+
+nuke:
+	docker stop $(docker ps -a -q);docker rm $(docker ps -a -q)

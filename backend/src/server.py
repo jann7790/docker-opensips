@@ -18,7 +18,6 @@ app = Flask(__name__)
  
 @app.route('/')
 def hello_world():
-    print('ip", os.environ['HOST_IP'])
     return 'Flask Dockerized'
 
 

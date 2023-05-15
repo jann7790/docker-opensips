@@ -2,6 +2,8 @@ version: '2'
 
 services:
   opensips:
+    env_file: .env
+    restart: always
 
     build:
       context: ./opensips
@@ -19,6 +21,9 @@ services:
 
 
   backend:
+    env_file: .env
+    restart: always
+    
     build:
       context: ./backend
       dockerfile: Dockerfile

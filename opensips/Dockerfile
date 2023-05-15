@@ -29,8 +29,8 @@ RUN echo "deb https://apt.opensips.org bullseye ${OPENSIPS_VERSION}-${OPENSIPS_B
 
 RUN apt-get -y update -qq && apt-get -y install opensips
 
-ARG OPENSIPS_CLI=false
-RUN if [ ${OPENSIPS_CLI} = true ]; then \
+ARG OPENSIPS_CLI=0
+RUN if [ ${OPENSIPS_CLI} = 1 ]; then \
     echo "deb https://apt.opensips.org bullseye cli-nightly" >/etc/apt/sources.list.d/opensips-cli.list \
     && apt-get -y update -qq && apt-get -y install opensips-cli \
     ;fi

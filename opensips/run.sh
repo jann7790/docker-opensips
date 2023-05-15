@@ -7,6 +7,12 @@ DOCKER_IP=$(ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7)
 # HOST_IP=$1
 echo "host ip ${HOST_IP}"
 
+service mariadb start
+mysql <  createDBUser.sql
+printf '\n'| opensips-cli -x database create
+printf ${HOST_IP}'\n'|opensips-cli -x user add 1000 123456;
+
+
 
 sed -i "s/^socket=udp.*5060/socket=udp:${DOCKER_IP}:5060\nadvertised_address=${HOST_IP}/g" /etc/opensips/opensips.cfg
 
