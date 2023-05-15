@@ -10,7 +10,12 @@ HOST_IP=$(shell ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7)
 
 
 
-all: build start
+all:
+	
+	make build
+	make start
+	make init_database
+	make attach
 
 
 

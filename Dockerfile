@@ -12,8 +12,13 @@ ARG OPENSIPS_BUILD=releases
 #install basic components
 RUN apt-get -y update -qq && apt-get -y install gnupg2 ca-certificates mariadb-server
 
+#backend for linphone
+RUN apt-get -y update -qq && apt-get -y install python3 python3-pip && pip3 install mysql-connector-python
+
+
+
 #for testing
-RUN apt-get -y update -qq && apt-get -y install sip-tester vim
+RUN apt-get -y update -qq && apt-get -y install vim
 
 #add keyserver, repository
 RUN apt-key adv --fetch-keys https://apt.opensips.org/pubkey.gpg
@@ -36,6 +41,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
 COPY run.sh /run.sh
+COPY backend.py /backend.py
 RUN chmod +x /run.sh
 
 
