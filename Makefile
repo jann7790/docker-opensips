@@ -33,6 +33,7 @@ build:
 init_database:
 	docker exec -it $(NAME)  service mariadb start
 
+	docker exec -i $(NAME)  mysql -t <  createDBUser.sql
 
 	echo NO PASSWORD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!, just press enter directly nextline
 	docker exec -it $(NAME)  opensips-cli -x database create
@@ -57,7 +58,7 @@ test:
 
 # -d
 start:
-	docker run -d -p 8000:8000/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG) $(HOST_IP)
+	docker run -d -p 3306:3306/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG) $(HOST_IP)
 
 kill:
 	docker kill $(NAME);docker rm $(NAME)

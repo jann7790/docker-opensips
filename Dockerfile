@@ -42,6 +42,8 @@ RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
 COPY run.sh /run.sh
 COPY backend.py /backend.py
+
+
 RUN chmod +x /run.sh
 
 
