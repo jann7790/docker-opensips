@@ -15,15 +15,18 @@ services:
         OPENSIPS_CLI : 1
         OPENSIPS_EXTRA_MODULES : opensips-mysql-module
         HOST_IP : ${HOST_IP}
+    expose:
+     - "3306/tcp"
     ports:
-     - "3306:3306/tcp"
      - "5060:5060/udp"
 
 
   backend:
-    env_file: .env
-    restart: always
     
+    restart: always
+    environment:
+      HOST_IP: opensips
+
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -31,4 +34,8 @@ services:
         HOST_IP: ${HOST_IP}
 
     ports:
-      - "80:8888"
+      - "80:80"
+    links:
+      - "opensips"
+    depends_on:
+      - opensips

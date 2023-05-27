@@ -58,7 +58,7 @@ test:
 
 # -d
 start:
-	docker run -d -p 3306:3306/tcp -p 5060:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
+	docker run -d -p 3306:3306/tcp -p 7414:5060/udp --name $(NAME) opensips/opensips:$(OPENSIPS_DOCKER_TAG)
 
 kill:
 	docker kill $(NAME);docker rm $(NAME)
