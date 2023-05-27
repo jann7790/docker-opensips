@@ -11,7 +11,9 @@
 ## settings
 
 須將vm 網路設定為 bridged ，否則區域網路內的裝置無法連接sips， 並勾選 replicate physical network
-(使用此網路設定若vm太久沒用導致 -> a start job is running for wait for network.........)
+(使用此網路設定若vm太久沒用不知為何導致 -> a start job is running for wait for network.........)
+使用HOST-only 無法連接dns
+目前使用NAT
 
 ![plot](./images/vm.jpg)
 
