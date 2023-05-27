@@ -22,16 +22,15 @@ services:
 
 
   backend:
+    env_file: .env
     
     restart: always
     environment:
-      HOST_IP: opensips
+      SQL_IP: opensips
 
     build:
       context: ./backend
       dockerfile: Dockerfile
-      args:
-        HOST_IP: ${HOST_IP}
 
     ports:
       - "80:80"

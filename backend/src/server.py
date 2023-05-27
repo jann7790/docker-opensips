@@ -7,7 +7,7 @@ import os
 
 
 db = mysql.connector.connect(
-    host=os.environ['HOST_IP'],
+    host=os.environ['SQL_IP'],
     user="newuser",
     password="newpassword",
     database="opensips"

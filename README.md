@@ -19,8 +19,9 @@
 
 set host_ip in .env by command below
 
-    ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7
+    <!-- ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7 -->
 
+    echo HOST_IP=$(ip route get 8.8.8.8 | head -n +1 | tr -s ' ' | cut -d ' ' -f 7) > .env
 
 
 ## Build and run the image
