@@ -8,7 +8,7 @@ DOCKER_IP=$(ip route get 8.8.8.8 | head -n +1 | tr -s " " | cut -d " " -f 7)
 echo "host ip ${HOST_IP}"
 
 service mariadb start
-mysql <  createDBUser.sql || true
+mysql < createDBUser.sql || true
 printf '\n'| opensips-cli -x database create || true
 printf ${HOST_IP}'\n'|opensips-cli -x user add 1000 123456 || true
 

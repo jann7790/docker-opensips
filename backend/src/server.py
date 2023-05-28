@@ -19,6 +19,24 @@ app = Flask(__name__)
 sip_ip = os.environ['HOST_IP']
 
 
+@app.route('/check/', methods=['POST'])
+def loginCheck():
+    response_data = {
+    "status": 1,
+    "nfc_code": "nfc123",
+    "valids": {
+        "1": 1,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 1
+    }
+    }
+
+
+    return response_data
+
+
 
 
 @app.route('/store/app/set_push_id/', methods=['POST'])
@@ -51,9 +69,9 @@ def verify():
         {
         "reg_line": "1",
         "li_name": "John",
-        "num": "123456",
-        "uid": "user123",
-        "pwd": "password123",
+        "num": "1000",
+        "uid": "1000",
+        "pwd": "123456",
         "ip": sip_ip,
         "unit": "unit123",
         "unit_name": "Community A",
