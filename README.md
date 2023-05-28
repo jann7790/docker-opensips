@@ -2,7 +2,7 @@
 
 使用版本opensips 3.3
 
-以 debian/bullseye docker 架設在 ubuntu18 的 vm上
+架設在 ubuntu18 vm 的 docker上
 
 
 
@@ -17,7 +17,7 @@
 使用HOST-only 無法連接dns
 
 
-目前使用NAT
+目前使用NAT 測試用
 
 ![plot](./images/vm.jpg)
 
@@ -28,6 +28,7 @@
 
 ## Build and run the image
 
+make
 
 
 
