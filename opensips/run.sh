@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# turn on bash's job control
+set -m
+
+
 sed -i "s/RUN_OPENSIPS=no/RUN_OPENSIPS=yes/g" /etc/default/opensips
 sed -i "s/DAEMON=\/sbin\/opensips/DAEMON=\/usr\/sbin\/opensips/g" /etc/init.d/opensips
 
@@ -27,4 +31,10 @@ cat /etc/opensips/opensips.cfg|grep advertised_address
 
 
 # skip syslog and run opensips at stderr
-/usr/sbin/opensips -FE
+/usr/sbin/opensips -FE &
+
+
+python3 /server.py
+
+
+fg %1

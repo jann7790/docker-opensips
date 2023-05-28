@@ -23,28 +23,10 @@
 
 
 
-set host_ip in .env by setEnv.sh
-
-    ./setEnv.sh
 
 
 
 ## Build and run the image
-
-
-
-
-
-
-run with output
-
-    docker-compose up --build
-
-
-run in the background
-
-    docker-compose up --build -d
-
 
 
 

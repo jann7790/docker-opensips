@@ -19,9 +19,8 @@ ARG OPENSIPS_BUILD=releases
 RUN apt-get -y update -qq && apt-get -y install gnupg2 ca-certificates mariadb-server
 
 
-
-#for testing
-RUN apt-get -y install vim
+#for server
+RUN apt-get -y install python3 python3-pip
 
 #add keyserver, repository
 RUN apt-key adv --fetch-keys https://apt.opensips.org/pubkey.gpg
@@ -60,7 +59,14 @@ RUN echo skip-bind-address >> /etc/mysql/my.cnf
 
 
 COPY run.sh /run.sh
+
+COPY requirements.txt /requirements.txt
+COPY server.py /server.py
+
+
+
 RUN chmod +x /run.sh
+RUN pip install -r requirements.txt
 
 
 
