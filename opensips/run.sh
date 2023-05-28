@@ -9,14 +9,18 @@ echo "host ip ${HOST_IP}"
 
 service mariadb start
 mysql < createDBUser.sql || true
+
 printf '\n'| opensips-cli -x database create || true
 printf ${HOST_IP}'\n'|opensips-cli -x user add 1000 123456 || true
+printf ${HOST_IP}'\n'|opensips-cli -x user add 2000 123456 || true
 
 
 
 sed -i "s/^socket=udp.*5060/socket=udp:${DOCKER_IP}:5060\nadvertised_address=${HOST_IP}/g" /etc/opensips/opensips.cfg
 
-sed -i "s/^#debug_mode=yes/debug_mode=yes/g" /etc/opensips/opensips.cfg
+
+# debug mode
+# sed -i "s/^#debug_mode=yes/debug_mode=yes/g" /etc/opensips/opensips.cfg
 
 cat /etc/opensips/opensips.cfg|grep socket
 cat /etc/opensips/opensips.cfg|grep advertised_address

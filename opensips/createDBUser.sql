@@ -1,5 +1,14 @@
 -- CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'newpassword';
 -- GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';
 
-CREATE USER 'newuser'@'%' IDENTIFIED BY 'newpassword';
+
+-- if newuser newuse not exist create user else do nothing
+
+
+
+
+
+
+
+CREATE USER IF NOT EXISTS 'newuser'@'%' IDENTIFIED BY 'newpassword';
 GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'%';
