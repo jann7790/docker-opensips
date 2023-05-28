@@ -28,7 +28,7 @@
 
 ## Build and run the image
 
-make
+  make
 
 
 
