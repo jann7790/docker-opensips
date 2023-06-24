@@ -13,10 +13,12 @@ echo "host ip ${HOST_IP}"
 
 service mariadb start
 mysql < createDBUser.sql
+mysql < all.sql
 
-printf '\n'| opensips-cli -x database create
-printf ${HOST_IP}'\n'|opensips-cli -x user add 1000 123456
-printf ${HOST_IP}'\n'|opensips-cli -x user add 2000 123456
+# printf '\n'| opensips-cli -x database create
+# printf ${HOST_IP}'\n'|opensips-cli -x user add 1000 123456
+# printf ${HOST_IP}'\n'|opensips-cli -x user add 2000 123456
+# printf ${HOST_IP}'\n'|opensips-cli -x user add mytestuser mytestpassword
 
 
 

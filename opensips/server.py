@@ -1,31 +1,133 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import os
 # from opensipscli import cli, defaults, version
 # from opensipscli import args
-# import mysql.connector
+import mysql.connector
+import hashlib
 
 app = Flask(__name__)
-sip_ip = os.environ['HOST_IP']
+domain = os.environ['HOST_IP']
 
 
 
-# db = mysql.connector.connect(
-#     host="127.0.0.1",
-#     user="newuser",
-#     password="newpassword",
-#     database="opensips"
-# )
+db = mysql.connector.connect(
+    host="127.0.0.1",
+    user="newuser",
+    password="newpassword",
+    database="opensips"
+)
 
 
-# @app.route("/sql")
-# def home():
-#     cursor = db.cursor()
-#     query = "SELECT table_name FROM information_schema.tables"
+@app.route('/sql')
+def index():
+    return render_template('test.html')
+    # return render_template('sql.html')
 
-#     cursor.execute(query)
-#     data = cursor.fetchall()
+
+
+def user_get_ha1(user, domain, password):
+    string = "{}:{}:{}".format(user, domain, password)
+    return hashlib.md5(string.encode('utf-8')).hexdigest()
+
+def user_get_ha1_sha256(user, domain, password):
+    string = "{}:{}:{}".format(user, domain, password)
+    return hashlib.sha256(string.encode('utf-8')).hexdigest()
+
+def user_get_ha1_sha512t256(user, domain, password):
+    string = "{}:{}:{}".format(user, domain, password)
+    o = hashlib.new("sha512-256")
+    o.update(string.encode('utf-8'))
+    return o.hexdigest()
+
+
+def save_user_to_database(username, password):
+    cursor = db.cursor()
+    ha1 = user_get_ha1(username, domain, password)
+    ha1_sha256 = user_get_ha1_sha256(username, domain, password)
+    ha1_sha512t256 = user_get_ha1_sha512t256(username, domain, password)
     
-#     return str(data)
+
+    statement = f"INSERT INTO subscriber (username, domain, ha1, ha1_sha256, ha1_sha512t256) \
+VALUES ('{username}', '{domain}', '{ha1}', '{ha1_sha256}', '{ha1_sha512t256}');"
+    cursor.execute(statement)
+    db.commit()
+    cursor.close()
+
+
+
+def check_username_exist(username):
+    cursor = db.cursor()
+    query = f"SELECT * FROM `subscriber` WHERE `username`='{username}';"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    cursor.close()
+    if len(data) == 0:
+        return False
+    else:
+        return True
+    
+
+def verify_user(username, password):
+    cursor = db.cursor()
+    query = f"SELECT * FROM `subscriber` WHERE `username`='{username}' AND `ha1`='{user_get_ha1(username, domain, password)}';"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    cursor.close()
+    if len(data) == 0:
+        return False
+    else:
+        return True
+
+
+
+@app.route("/register", methods=["POST"])
+def register():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    confirm_password = request.form.get("confirm-password")
+    if check_username_exist(username):
+        return jsonify({"success": False, "error": "用戶名已存在"})
+    
+
+    if password != confirm_password:
+        return jsonify({"success": False, "error": "密碼和確認密碼不一致"})
+    
+
+
+    save_user_to_database(username, password)
+    return jsonify({"success": True, "message": f"註冊成功"})
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+
+    if not verify_user(username, password):
+        return jsonify({"success": False, "error": "用戶名或密碼錯誤"})
+
+    return jsonify({"success": True, "message": f"登錄成功"})
+
+
+
+#     query = "SELECT table_name FROM information_schema.tables"
+# (1, '1000', '172.27.191.245', '', '', '7fed1cb22fcaa923287e94753db8f604', 'a46e73e05913604c0c628659d24c220f7c5dff4d53a4cb974f1b9a32a6e9b59e', 'c538247777b8bd7e26396acde9f45740087b84cad0ff8605945de068446646f9', None)
+
+@app.route("/ajax", methods=['POST'])
+def ajax():
+    query = request.values['sql']
+    print(query)
+
+    
+    cursor = db.cursor()
+
+    cursor.execute(query)
+    data = cursor.fetchall()
+    
+    return str(data)
+
+
+
 
 
 
@@ -291,7 +393,7 @@ def verify():
         "num": "1000",
         "uid": "1000",
         "pwd": "123456",
-        "ip": sip_ip,
+        "ip": domain,
         "unit": "unit123",
         "unit_name": "Community A",
         "is_guard": 1,
@@ -303,7 +405,7 @@ def verify():
         "num": "789012",
         "uid": "user456",
         "pwd": "password456",
-        "ip": sip_ip,
+        "ip": domain,
         "unit": "unit456",
         "unit_name": "Community B",
         "is_guard": 0,

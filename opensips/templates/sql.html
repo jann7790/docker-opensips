@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-tw">
+<head>
+	
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.4/tocas.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.4/tocas.min.js"></script>
+	
+</head>
+<body>
+	<div class="ts-container">
+
+		<div class="ts-segment">
+			<div class="ts-wrap">
+
+				<div class="ts-wrap is-compact">
+					<div class="ts-input" id='sql'>
+						<input type="text" placeholder="sql query">
+					</div>
+				</div>
+
+				<button class="ts-button" id="search">search</button>
+			</div>
+		</div>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="ts snackbar">
+		<div class="content"></div>
+		<a class="action"></a>
+	</div>
+
+	<script>
+
+
+
+		
+		let input = document.getElementById("sql");
+		let button = document.getElementById("search");
+
+
+		button.addEventListener("click", function() {
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST", "ajax?");
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.onload = function() {
+				if (xhr.status === 200) {
+					console.log(xhr.responseText);
+					let span = document.createElement("span");
+					span.classList.add("ts-text");
+					span.textContent = xhr.responseText;
+
+					document.body.appendChild(span);
+
+				}
+			};
+
+
+			xhr.send("sql=" + document.querySelector("#sql > input[type=text]").value);
+		});
+
+	</script>
+
+</body>

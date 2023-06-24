@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-tw">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.4/tocas.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.4/tocas.min.js"></script>
+</head>
+<body>
+    <div class="ts-container">
+        <!-- 新增一個註冊和登錄面板 -->
+        <div class="ts-segment">
+            <div class="ts-wrap">
+                <!-- 用一個標籤頁來切換註冊和登錄 -->
+                <div class="ts-tabbed menu">
+                    <a class="item active" data-tab="register">註冊</a>
+                    <a class="item" data-tab="login">登錄</a>
+                </div>
+                <!-- 註冊表單 -->
+                <div class="ts tabbed content active" data-tab="register">
+                    <form class="ts form" id="register-form">
+                        <div class="field">
+                            <label>用戶名</label>
+                            <input type="text" name="username" placeholder="請輸入用戶名">
+                        </div>
+                        <div class="field">
+                            <label>密碼</label>
+                            <input type="password" name="password" placeholder="請輸入密碼">
+                        </div>
+                        <div class="field">
+                            <label>確認密碼</label>
+                            <input type="password" name="confirm-password" placeholder="請再次輸入密碼">
+                        </div>
+                        <button class="ts button" type="submit">註冊</button>
+                    </form>
+                </div>
+                <!-- 登錄表單 -->
+                <div class="ts tabbed content" data-tab="login">
+                    <form class="ts form" id="login-form">
+                        <div class="field">
+                            <label>用戶名</label>
+                            <input type="text" name="username" placeholder="請輸入用戶名">
+                        </div>
+                        <div class="field">
+                            <label>密碼</label>
+                            <input type="password" name="password" placeholder="請輸入密碼">
+                        </div>
+                        <button class="ts button" type="submit">登錄</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 原有的內容 -->
+        <div class="ts-segment">
+            <div class="ts-wrap">
+                <div class="ts-wrap is-compact">
+                    <div class="ts-input" id='sql'>
+                        <input type="text" placeholder="sql query">
+                    </div>
+                </div>
+                <button class="ts-button" id="search">search</button>
+            </div>
+        </div>
+
+        <!-- 新增一個 snackbar 來顯示註冊和登錄的結果 -->
+        <div class="ts snackbar" id='result'>
+            <div class='content'></div>
+            <a class='action'></a>
+        </div>
+
+        <script>
+            let input = document.getElementById("sql");
+            let button = document.getElementById("search");
+
+            button.addEventListener("click", function() {
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "ajax?");
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        let span = document.createElement("span");
+                        span.classList.add("ts-text");
+                        span.textContent = xhr.responseText;
+                        document.body.appendChild(span);
+                    }
+                };
+                xhr.send("sql=" + document.querySelector("#sql > input[type=text]").value);
+            });
+
+            // 獲取註冊和登錄表單
+            let registerForm = document.getElementById("register-form");
+            let loginForm = document.getElementById("login-form");
+            // 獲取 snackbar
+            let result = document.getElementById("result");
+
+            registerForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                let formData = new FormData(registerForm);
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "register");
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        let data = JSON.parse(xhr.responseText);
+                        if (data.success) {
+                            result.querySelector(".content").textContent = data.message;
+                            result.classList.add("positive");
+                            result.classList.remove("negative");
+                            result.classList.add("active");
+                            setTimeout(function() {
+                                result.classList.remove("active");
+                            }, 1000);
+                        } else {
+                            result.querySelector(".content").textContent = data.error;
+                            result.classList.add("negative");
+                            result.classList.remove("positive");
+                            result.classList.add("active");
+                            setTimeout(function() {
+                                result.classList.remove("active");
+                            }, 1000);
+                        }
+                    }
+                };
+
+                xhr.send(formData);
+            });
+
+
+            loginForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                let formData = new FormData(loginForm);
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "login");
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        let data = JSON.parse(xhr.responseText);
+                        if (data.success) {
+                            result.querySelector(".content").textContent = data.message;
+                            result.classList.add("positive");
+                            result.classList.remove("negative");
+                            result.classList.add("active");
+                            setTimeout(function() {
+                                result.classList.remove("active");
+                            }, 1000);
+                        } else {
+                            result.querySelector(".content").textContent = data.error;
+                            result.classList.add("negative");
+                            result.classList.remove("positive");
+                            result.classList.add("active");
+                            setTimeout(function() {
+                                result.classList.remove("active");
+                            }, 1000);
+                        }
+                    }
+                };
+                xhr.send(formData);
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+id, username, domain, password, email_address, ha1, ha1_sha256, ha1_sha512t256, rpid,
+1, '1000', '172.27.191.245', '', '', '7fed1cb22fcaa923287e94753db8f604', 'a46e73e05913604c0c628659d24c220f7c5dff4d53a4cb974f1b9a32a6e9b59e', 'c538247777b8bd7e26396acde9f45740087b84cad0ff8605945de068446646f9', None
+
+
+
+
+
+
+
+
+
+
+

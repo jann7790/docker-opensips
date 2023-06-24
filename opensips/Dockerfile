@@ -50,6 +50,7 @@ RUN sed -i "s/log_stderror=no/log_stderror=yes/g" /etc/opensips/opensips.cfg
 
 
 COPY createDBUser.sql /createDBUser.sql
+COPY all.sql /all.sql
 
 
 # allow remote access
@@ -63,7 +64,7 @@ COPY run.sh /run.sh
 COPY requirements.txt /requirements.txt
 COPY server.py /server.py
 
-
+COPY templates /templates
 
 RUN chmod +x /run.sh
 RUN pip install -r requirements.txt
