@@ -20,7 +20,7 @@ RUN apt-get -y update -qq && apt-get -y install gnupg2 ca-certificates mariadb-s
 
 
 #for server
-RUN apt-get -y install python3 python3-pip
+RUN apt-get -y update -qq && apt-get -y install python3 python3-pip
 
 #add keyserver, repository
 RUN apt-key adv --fetch-keys https://apt.opensips.org/pubkey.gpg
